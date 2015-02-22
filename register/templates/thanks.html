@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>CTJB</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="normalize.css">
+  <link rel="stylesheet" href="skeleton.css">
+  <link rel="icon" type="image/png" href="favicon.png">
+</head>
+<body>
+
+  <div class="container">
+
+  <div class="row">
+    <div class="one-half column" style="margin-top: 20px;">
+      <h1>CTJB 2015</h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="full column">
+      <h4>Dakujeme za registraciu!</h4>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="six columns">
+      <h5>Platba v Eurach</h5>
+      <table>
+      <tr><td>ciastka:</td><td><strong>{{ price_eur }} EUR</strong></td></tr>
+      <tr><td>cislo uctu:</td><td><strong>2700158887 / 8330</strong></td></tr>
+      <tr><td>variabilny symbol:</td><td><strong>{{user_id}}</strong></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="six columns">
+      <h5>Platba v Ceskych Korunach</h5>
+      <table>
+      <tr><td>ciastka:</td><td><strong>{{ price_czk }} CZK</strong></td></tr>
+      <tr><td>cislo uctu:</td><td><strong>2700158887 / 2010</strong></td></tr>
+      <tr><td>variabilny symbol:</td><td><strong>{{user_id}}</strong></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="six columns">
+      <h5>Platba v Bitcoinoch</h5>
+      <table>
+      <tr><td>ciastka:</td><td><strong>{{ price_btc }} BTC</strong></td></tr>
+      <tr><td>adresa:</td><td><strong>1AHipWrCLC9HAJaRoYa99e1srG8BHikK2m</strong></td></tr>
+      </table>
+    </div>
+    <div class="six columns">
+      <img src="https://chart.googleapis.com/chart?cht=qr&chs=200x200&chld=H|0&chl=bitcoin:1AHipWrCLC9HAJaRoYa99e1srG8BHikK2m?amount={{ price_btc }}">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="eleven columns">
+      <p>Po zaplateni a overeni platby zasleme na email PDF listok.</p>
+      <p>Sponzorsky program vyhodnotime na konci marca.</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="eleven columns">
+      <h5>Co dalej?</h5>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="eleven columns">
+      <p>Ak si chcete zaregistrovat talk, napiste nam jeho nazov a kratsi abstrakt na email <a href="mailto:talks@ctjb.net">talks@ctjb.net</a></p>
+      <p>A hlavne sledujte wiki na <a href="https://ctjb.net/">ctjb.net</a>, kde sa postupne budu objavovat zaujimave informacie.</p>
+    </div>
+  </div>
+
+</body>
+</html>

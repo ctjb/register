@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>CTJB</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="normalize.css">
+  <link rel="stylesheet" href="skeleton.css">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+  <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <script src="script.js"></script>
+</head>
+<body>
+
+  <div class="container">
+  <form action="/register" method="post">
+
+    <div class="row">
+      <div class="full column" style="margin-top: 20px;">
+        <h1>CTJB 2015 Registracie</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="full column">
+        <h4>30.4-3.5. Zaruby, Slovensko</h4>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="three columns">
+        <h5>Udaje</h5>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="four columns">
+        <label for="email">Nick</label>
+        <input class="u-full-width" type="text" placeholder="nick" id="nick" name="nick" required="required">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="four columns">
+        <label for="email">Email</label>
+        <input class="u-full-width" type="email" placeholder="email@example.com" id="email" name="email" required="required">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="ten columns">
+        <h5>Ubytovanie</h5>
+        <ul>
+          <li>ubytovanie je v chatkach o kapacite cca 6-8 ludi</li>
+          <li>celkova kapacita kempu je 100 ludi</li>
+          <li>naposledy nam par z vas pisalo, ze by chceli radsej byt vo vlastnom stane ako v chatke</li>
+          <li>ak patrite medzi nich, vyberte nizsie, ze chcete "radsej stan", ale <strong>cena listka sa nemeni!</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="three columns">
+        <label for="cabin">Preferovane cislo chatky</label>
+        <select class="u-full-width" id="cabin" name="cabin">
+          <option value="0">je mi to jedno</option>
+          <option value="scout">jbm chatky, radsej stan!</option>
+          <option value="1">chatka 1</option>
+          <option value="2">chatka 2</option>
+          <option value="3">chatka 3</option>
+          <option value="4">chatka 4</option>
+          <option value="5">chatka 5</option>
+          <option value="6">chatka 6</option>
+          <option value="7">chatka 7</option>
+          <option value="8">chatka 8</option>
+          <option value="10">chatka 10</option>
+          <option value="11">chatka 11</option>
+          <option value="12">chatka 12</option>
+          <option value="13">chatka 13</option>
+          <option value="15">chatka 15</option>
+          <option value="17">chatka 17</option>
+        </select>
+        <ul>
+          <li>v zatvorkach je uvedena kapacita (prizemie+poschodie)</li>
+          <li>ak bude chatka zaplnena, pridelime najblizsiu moznu</li>
+          <li>chatky 3, 4, 5, 12, 13, 15 su vhodne pre tych, co maju radi ticho, kedze su najdalej od centra "diania"</li>
+        </ul>
+      </div>
+      <div class="nine columns">
+        <img src="plan.png" width="700">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="nine columns">
+        <h5>Level</h5>
+
+        <p>Kedze tento rok trva kemp o jeden den dlhsie, museli sme pristupit k zvyseniu vstupneho na 50 EUR.</p>
+
+        <p>Pre studentov a nepracujucich sme pripravili sponzorsky program.
+        Po vybrati "Starving Hacker" nizsie, je mozne pridat popis vas a vasich aktivit. Na <strong>konci marca</strong> predame tieto popisy tym,
+        ktori si v menu naopak vybrali "Sponsor Hacker". Tito sponzori budu mat moznost rozhodnut,
+        komu preplatia ucast na kempe zo svojho registracneho poplatku.</p>
+
+        <label for="level_starving">
+          <input type="radio" id="level_starving" name="level" value="starving">
+          <span class="label-body">Starving Hacker</span> 0 EUR
+        </label>
+
+        <label for="level_regular">
+          <input type="radio" id="level_regular" name="level" value="regular" checked>
+          <span class="label-body">Regular Hacker</span> 50 EUR
+        </label>
+
+        <label for="level_sponsor">
+          <input type="radio" id="level_sponsor" name="level" value="sponsor">
+          <span class="label-body">Sponsor Hacker</span> 100 EUR
+        </label>
+
+        <textarea class="u-full-width" placeholder="Toto je popis mna, mojich aktivit a toho, preco by mal sponzor pozvat na kemp prave mna ..." id="desc" name="desc" style="height: 100px; display:none;"></textarea>
+
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="three columns">
+        <h5>Tricko</h5>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="four columns">
+        <label for="tshirt"><span class="label-body">Chcem CTJB tricko</span> (+15 EUR)</label>
+        <select class="u-full-width" id="tshirt" name="tshirt">
+          <option value="shirt-no">nechcem</option>
+          <option value="shirt-p-XS">panske velkost XS</option>
+          <option value="shirt-p-S">panske velkost S</option>
+          <option value="shirt-p-M">panske velkost M</option>
+          <option value="shirt-p-L">panske velkost L</option>
+          <option value="shirt-p-XL">panske velkost XL</option>
+          <option value="shirt-p-XXL">panske velkost XXL</option>
+          <option value="shirt-d-XS">damske velkost XS</option>
+          <option value="shirt-d-S">damske velkost S</option>
+          <option value="shirt-d-M">damske velkost M</option>
+          <option value="shirt-d-L">damske velkost L</option>
+          <option value="shirt-d-XL">damske velkost XL</option>
+          <option value="shirt-d-XXL">damske velkost XXL</option>
+        </select>
+        <ul>
+          <li>cierne tricko 155 g/m<sup>2</sup></li>
+          <li>100% organicka bavlna</li>
+          <li>biela potlac 20 cm x 15 cm</li>
+          <li>paska cez oci not included</li>
+        </ul>
+      </div>
+      <div class="eight columns">
+        <img src="shirt-p.jpg">
+        <img src="shirt-d.jpg">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="five columns">
+        <h4><strong>Celkova cena: <span id="price">50</span>,- EUR</strong></h4>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="eleven columns">
+        <h5>Dolezite!</h5>
+        <ul>
+          <li>Tento rok sme sa rozhodli, ze listky sa nebudu dat vracat, kedze to znamenalo pre nas kopec prace navyse.</li>
+          <li>Po sprocesovani platby dostanete emailom PDFko, ktore bude sluzit ako vstupenka na kemp.</li>
+          <li><strong>Vyplnte preto platny email!</strong></li>
+          <li>Tento listok bude mozne v pripade neucasti odpredat inemu zaujemcovi, ktory sa nim preukaze na mieste.</li>
+          <li>To znamena, ze na mieste nebudeme riesit, kto si listok kupil, ale kto sa nim preukaze (ako prvy).</li>
+        </ul>
+      </div>
+    </div>
+
+    <input class="button-primary" type="submit" value="Suhlasim a chcem sa registrovat!">
+
+  </form>
+  </div>
+
+</body>
+</html>
