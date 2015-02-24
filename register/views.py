@@ -2,6 +2,7 @@ from register import app, db
 from register.models import Person
 
 from flask import jsonify, make_response, request, render_template
+from flask_mail import Mail, Message
 
 @app.errorhandler(404)
 def not_found(error):
@@ -29,6 +30,34 @@ def register():
 
 	db.session.add(person)
 	db.session.commit()
+
+	msg = Message("CTJB 2015 Registracia", sender="ctjb@ctjb.net", recipients=[email])
+	msg.body = """
+Dakujeme za registraciu!
+
+Platba v Eurach
+---------------
+ciastka:             %d EUR
+cislo uctu:          2700158887 / 8330
+variabilny symbol:   %d
+
+Platba v Ceskych Korunach
+-------------------------
+ciastka:             %d CZK
+cislo uctu:          2700158887 / 2010
+variabilny symbol:   %d
+
+Platba v Bitcoinoch
+-------------------
+ciastka:   %f BTC
+adresa:    1AHipWrCLC9HAJaRoYa99e1srG8BHikK2m
+
+Po zaplateni a overeni platby zasleme na email PDF listok.
+
+Sponzorsky program vyhodnotime na konci marca.
+"""
+	mail = Mail(app)
+	mail.send(msg)
 
 	return render_template('thanks.html', user_id=person.id, price_eur=price, price_czk=price*28, price_btc=price/200.0+person.id*0.00000001)
 
