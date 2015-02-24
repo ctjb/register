@@ -31,6 +31,10 @@ def register():
 	db.session.add(person)
 	db.session.commit()
 
+	user_id = person.id
+	price_czk = price * 28
+	price_btc = price / 200.0 + user_id * 0.00000001
+
 	msg = Message("CTJB 2015 Registracia", sender="ctjb@ctjb.net", recipients=[email])
 	msg.body = """
 Dakujeme za registraciu!
@@ -55,11 +59,11 @@ adresa:    1AHipWrCLC9HAJaRoYa99e1srG8BHikK2m
 Po zaplateni a overeni platby zasleme na email PDF listok.
 
 Sponzorsky program vyhodnotime na konci marca.
-"""
+""" % (price, user_id, price_czk, user_id, price_btc)
 	mail = Mail(app)
 	mail.send(msg)
 
-	return render_template('thanks.html', user_id=person.id, price_eur=price, price_czk=price*28, price_btc=price/200.0+person.id*0.00000001)
+	return render_template('thanks.html', user_id=user_id, price_eur=price, price_czk=price_czk, price_btc=price_btc)
 
 @app.route('/')
 def root():
