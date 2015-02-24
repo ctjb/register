@@ -4,6 +4,10 @@ from register.models import Person
 from flask import jsonify, make_response, request, render_template
 from flask_mail import Mail, Message
 
+import qrcode
+import StringIO
+import base64
+
 @app.errorhandler(404)
 def not_found(error):
 	return make_response(jsonify({'error': 'Not found'}), 404)
@@ -63,7 +67,12 @@ Sponzorsky program vyhodnotime na konci marca.
 	mail = Mail(app)
 	mail.send(msg)
 
-	return render_template('thanks.html', user_id=user_id, price_eur=price, price_czk=price_czk, price_btc=price_btc)
+	buf = StringIO.StringIO()
+	img = qrcode.make('bitcoin:1AHipWrCLC9HAJaRoYa99e1srG8BHikK2m?amount=%0.8f' % price_btc)
+	img.save(buf, 'PNG')
+	qrdata = 'data:image/png;base64,' + base64.b64encode(buf.getvalue())
+
+	return render_template('thanks.html', user_id=user_id, price_eur=price, price_czk=price_czk, price_btc=price_btc,qrcode=qrdata)
 
 @app.route('/')
 def root():
