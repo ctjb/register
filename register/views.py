@@ -12,7 +12,7 @@ import base64
 def not_found(error):
 	return make_response(jsonify({'error': 'Not found'}), 404)
 
-@app.route('/register', methods = ['POST'])
+@app.route('/', methods = ['POST'])
 def register():
 
 	nick = request.form['nick']
@@ -74,7 +74,7 @@ Sponzorsky program vyhodnotime na konci marca.
 
 	return render_template('thanks.html', user_id=user_id, price_eur=price, price_czk=price_czk, price_btc=price_btc,qrcode=qrdata)
 
-@app.route('/')
+@app.route('/', methods = ['GET'])
 def root():
 	return app.send_static_file('index.html')
 
