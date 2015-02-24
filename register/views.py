@@ -1,12 +1,24 @@
 from register import app, db
 from register.models import Person
 
-from flask import jsonify, make_response, request, render_template
+from flask import jsonify, make_response, request, render_template, copy_current_request_context
 from flask_mail import Mail, Message
 
 import qrcode
 import StringIO
 import base64
+
+from threading import Thread
+
+def send_mail_async(app, msg):
+
+	@copy_current_request_context
+	def send_mail(app, msg):
+		mail = Mail(app)
+		mail.send(msg)
+
+	t = Thread(target=send_mail, args = (app, msg))
+	t.start()
 
 @app.errorhandler(404)
 def not_found(error):
@@ -64,8 +76,8 @@ Po zaplateni a overeni platby zasleme na email PDF listok.
 
 Sponzorsky program vyhodnotime na konci marca.
 """ % (price, user_id, price_czk, user_id, price_btc)
-	mail = Mail(app)
-	mail.send(msg)
+
+	send_mail_async(app, msg)
 
 	buf = StringIO.StringIO()
 	img = qrcode.make('bitcoin:1AHipWrCLC9HAJaRoYa99e1srG8BHikK2m?amount=%0.8f' % price_btc)
