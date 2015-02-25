@@ -1,7 +1,7 @@
 from register import app, db
 from register.models import Person
 
-from flask import jsonify, make_response, request, render_template, copy_current_request_context
+from flask import make_response, request, render_template, copy_current_request_context
 from flask_mail import Mail, Message
 
 import qrcode
@@ -22,7 +22,12 @@ def send_mail_async(app, msg):
 
 @app.errorhandler(404)
 def not_found(error):
-	return make_response(jsonify({'error': 'Not found'}), 404)
+	return make_response('Not found', 404)
+
+@app.route('/count', methods = ['GET'])
+def count():
+	cnt = Person.query.count()
+	return make_response(str(cnt), 200)
 
 @app.route('/', methods = ['POST'])
 def register():
