@@ -16,23 +16,26 @@ def qrdata(value):
 
 num = input('User ID: ')
 p = Person.query.get(num)
-if not p:
-	print 'Not found'
-	sys.exit(1)
 
-p.paid = True
-token = p.token
-db.session.commit()
+if p:
+	p.paid = True
+	token = p.token
+	email = p.email
+	db.session.commit()
+	print
+	print 'Making ticket for %s' % email
+	t = open('ticket.svg', 'r').read()
+	f = open('ticket_%d.svg' % num, 'w')
+	t = t.replace('@@QR_CODE_IMAGE@@', qrdata(token))
+	t = t.replace('@@QR_CODE_TEXT_1@@', token[:32])
+	t = t.replace('@@QR_CODE_TEXT_2@@', token[32:])
+	f.write(t)
+	f.close()
+	os.system('inkscape ticket_%d.svg --export-pdf=ticket_%d.pdf --export-text-to-path' % (num, num))
+	os.unlink('ticket_%d.svg' % num)
+	open('ticket_%d.txt' % num, 'w').write(email)
 
-print num, token
-
-t = open('ticket.svg', 'r').read()
-f = open('ticket_%d.svg' % num, 'w')
-t = t.replace('@@QR_CODE_IMAGE@@', qrdata(token))
-t = t.replace('@@QR_CODE_TEXT_1@@', token[:32])
-t = t.replace('@@QR_CODE_TEXT_2@@', token[32:])
-f.write(t)
-f.close()
-
-os.system('inkscape ticket_%d.svg --export-pdf=ticket_%d.pdf --export-text-to-path' % (num, num))
-os.unlink('ticket_%d.svg' % num)
+print
+print 'Attendees:'
+for p in Person.query.filter(Person.paid == True):
+	print p.id, p.token, p.email
