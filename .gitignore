@@ -3,3 +3,4 @@ register/data/*.sqlite
 ca_ctjb.crt
 ca_ctjb.key
 ticket*.pdf
+tickets/
