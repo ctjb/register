@@ -26,8 +26,10 @@ def not_found(error):
 
 @app.route('/count', methods = ['GET'])
 def count():
-	cnt = Person.query.count()
-	return make_response(str(cnt), 200)
+	cnt_total = Person.query.count()
+	cnt_paid = Person.query.filter(Person.paid == True).count()
+	res = '%d/%d' % (cnt_paid, cnt_total)
+	return make_response(res, 200)
 
 @app.route('/', methods = ['POST'])
 def register():
