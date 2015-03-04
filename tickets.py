@@ -23,11 +23,13 @@ print 'Attendees:'
 for p in Person.query.filter(Person.paid == True):
 	print p.id, p.token, p.email
 	if GEN_TICKETS:
+		fn = 'ticket_%03d_%s' % (p.id, p.email)
+		if os.path.isfile('tickets/%s.pdf' % fn):
+			continue
 		tt = t
 		tt = tt.replace('@@QR_CODE_IMAGE@@', qrdata(p.token))
 		tt = tt.replace('@@QR_CODE_TEXT_1@@', p.token[:32])
 		tt = tt.replace('@@QR_CODE_TEXT_2@@', p.token[32:])
-		fn = 'ticket_%03d_%s' % (p.id, p.email)
 		f = open('tickets/%s.svg' % fn, 'w')
 		f.write(tt)
 		f.close()
