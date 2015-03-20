@@ -35,3 +35,4 @@ for p in Person.query.filter(Person.paid == True):
 		f.close()
 		os.system('inkscape tickets/%s.svg --export-pdf=tickets/%s.pdf --export-text-to-path' % (fn, fn))
 		os.unlink('tickets/%s.svg' % fn)
+		print '^^ NEW'
