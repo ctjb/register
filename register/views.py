@@ -37,10 +37,14 @@ def register():
 	nick = request.form['nick']
 	email = request.form['email']
 	cabin = request.form['cabin']
-	level = request.form['level']
-	if not level:
+	if 'level' in request.form:
+		level = request.form['level']
+	else:
 		level = 'regular'
-	desc = request.form['desc']
+	if 'desc' in request.form:
+		desc = request.form['desc']
+	else:
+		desc = ''
 	tshirt = request.form['tshirt']
 
 	price = 0
