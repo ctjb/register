@@ -1,4 +1,5 @@
 from register import db
+import os
 import hashlib
 
 class Person(db.Model):
@@ -22,7 +23,7 @@ class Person(db.Model):
 		self.desc = desc
 		self.tshirt = tshirt
 		self.price = price
-		self.token = hashlib.sha256(file('/dev/random').read(32)).hexdigest()
+		self.token = hashlib.sha256(os.urandom(32)).hexdigest()
 		self.paid = False
 
 	def serialize(self):
