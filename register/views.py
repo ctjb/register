@@ -75,7 +75,7 @@ variabilny symbol:   %d
 
 Platba v Bitcoinoch
 -------------------
-ciastka:   %0.8f BTC
+ciastka:   %0.8f BTC (posielajte presne!)
 adresa:    14R3dXhbsnStDwhyrNY8LN6ZRZ2PefKb2W
 
 Po zaplateni a overeni platby zasleme na email PDF listok.
