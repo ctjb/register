@@ -36,22 +36,15 @@ def register():
 
 	nick = request.form['nick']
 	email = request.form['email']
-	cabin = request.form['cabin']
-	if 'level' in request.form:
-		level = request.form['level']
-	else:
-		level = 'regular'
 	if 'desc' in request.form:
 		desc = request.form['desc']
 	else:
 		desc = ''
 	tshirt = request.form['tshirt']
 
-	price = 0
-	if level == 'regular':
-		price += 50
-	if level == 'sponsor':
-		price += 100
+	cabin = 0
+	level = 'regular'
+	price = 40
 	if tshirt != 'shirt-no':
 		price += 15
 
@@ -61,10 +54,10 @@ def register():
 	db.session.commit()
 
 	user_id = person.id
-	price_czk = price * 28
-	price_btc = price / 200.0 + user_id * 0.00000001
+	price_czk = price * 27.50
+	price_btc = int(price * 100000 / 375) * 1.0 / 100000 + user_id * 0.00000001 # last 3 decimals of price are user ID
 
-	msg = Message("CTJB 2015 Registracia", sender="ctjb@ctjb.net", recipients=[email])
+	msg = Message("CTJB 2016 Registracia", sender="ctjb@ctjb.net", recipients=[email])
 	msg.body = """
 Dakujeme za registraciu!
 
@@ -83,17 +76,15 @@ variabilny symbol:   %d
 Platba v Bitcoinoch
 -------------------
 ciastka:   %0.8f BTC
-adresa:    1AHipWrCLC9HAJaRoYa99e1srG8BHikK2m
+adresa:    14R3dXhbsnStDwhyrNY8LN6ZRZ2PefKb2W
 
 Po zaplateni a overeni platby zasleme na email PDF listok.
-
-Sponzorsky program vyhodnotime na konci marca.
 """ % (price, user_id, price_czk, user_id, price_btc)
 
 	send_mail_async(app, msg)
 
 	buf = StringIO.StringIO()
-	img = qrcode.make('bitcoin:1AHipWrCLC9HAJaRoYa99e1srG8BHikK2m?amount=%0.8f' % price_btc)
+	img = qrcode.make('bitcoin:14R3dXhbsnStDwhyrNY8LN6ZRZ2PefKb2W?amount=%0.8f' % price_btc)
 	img.save(buf, 'PNG')
 	qrdata = 'data:image/png;base64,' + base64.b64encode(buf.getvalue())
 
