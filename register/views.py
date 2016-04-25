@@ -65,6 +65,8 @@ Platba v Eurach
 ---------------
 ciastka:             %d EUR
 cislo uctu:          2700158887 / 8330
+iban:                CZ7220100000002700158887
+bic/swift:           FIOBCZPPXXX
 variabilny symbol:   %d
 
 Platba v Ceskych Korunach
