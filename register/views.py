@@ -55,7 +55,7 @@ def register():
 
 	user_id = person.id
 	price_czk = price * 27.50
-	price_btc = int(price * 100000 / 375) * 1.0 / 100000 + user_id * 0.00000001 # last 3 decimals of price are user ID
+	price_btc = int(price * 100000 / 570) * 1.0 / 100000 + user_id * 0.00000001 # last 3 decimals of price are user ID
 
 	msg = Message("CTJB 2016 Registracia", sender="ctjb@ctjb.net", recipients=[email])
 	msg.body = """
