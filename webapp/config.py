@@ -1,2 +1,3 @@
 SQLALCHEMY_DATABASE_URI = "sqlite:///data/register.sqlite"
 SQLALCHEMY_TRACK_MODIFICATIONS = False
+CTJB_XPUB = "xpub6CVKsQYXc9awxgV1tWbG4foDvdcnieK2JkbpPEBKB5WwAPKBZ1mstLbKVB4ov7QzxzjaxNK6EfmNY5Jsk2cG26EVcEkycGW4tchT2dyUhrx"

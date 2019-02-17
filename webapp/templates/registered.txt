@@ -1,0 +1,8 @@
+Dakujeme za registraciu!
+
+Platba v Bitcoinoch
+-------------------
+ciastka:   {{ btc_price }} BTC (posielajte presne!)
+adresa:    {{ btc_address }}
+
+Po zaplateni a overeni platby zasleme na email PDF listok.

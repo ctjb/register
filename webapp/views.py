@@ -1,12 +1,27 @@
 import base64
-from io import StringIO
+from io import BytesIO
 from threading import Thread
 
 import qrcode
+import requests
 from flask import copy_current_request_context, make_response, render_template, request
 from flask_mail import Mail, Message
+
 from main import app, db
 from models import Person
+import btc
+
+
+def get_price_satoshi(euros):
+    try:
+        price = requests.get(
+            "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=eur"
+        ).json()["bitcoin"]["eur"]
+        # sanity check
+        assert price > 2000 and price < 10000
+        return int(100000000 * euros / price)
+    except:
+        return None
 
 
 def send_mail_async(app, msg):
@@ -35,79 +50,52 @@ def count():
 @app.route("/", methods=["POST"])
 def register():
 
+    price = get_price_satoshi(euros=60)
+    if not price:
+        return make_response("Price fail", 500)
+
     nick = request.form["nick"]
     email = request.form["email"]
-    if "desc" in request.form:
-        desc = request.form["desc"]
-    else:
-        desc = ""
     tshirt = request.form["tshirt"]
 
-    cabin = 0
-    level = "regular"
-    price = 40
-    if tshirt != "shirt-no":
-        price += 15
+    days = ""
+    for i in range(1, 6):
+        field = "day%d" % i
+        if field in request.form:
+            days += "X"
+        else:
+            days == "."
 
-    person = Person(nick, email, cabin, level, desc, tshirt, price)
+    person = Person(nick=nick, email=email, tshirt=tshirt, price=price, days=days)
 
     db.session.add(person)
     db.session.commit()
 
-    user_id = person.id
-    price_czk = price * 27.50
-    price_btc = (
-        int(price * 100000 / 570) * 1.0 / 100000 + user_id * 0.00000001
-    )  # last 3 decimals of price are user ID
+    try:
+        btc_address = btc.addresses[person.id]
+    except:
+        return make_response("Address fail", 500)
+    btc_price = "%0.8f" % (price / 100000000)
 
     msg = Message("CTJB 2019 Registracia", sender="ctjb@ctjb.net", recipients=[email])
-    msg.body = """
-Dakujeme za registraciu!
-
-Platba v Eurach
----------------
-ciastka:             %d EUR
-cislo uctu:          2700158887 / 8330
-iban:                CZ7220100000002700158887
-bic/swift:           FIOBCZPPXXX
-variabilny symbol:   %d
-
-Platba v Ceskych Korunach
--------------------------
-ciastka:             %d CZK
-cislo uctu:          2700158887 / 2010
-variabilny symbol:   %d
-
-Platba v Bitcoinoch
--------------------
-ciastka:   %0.8f BTC (posielajte presne!)
-adresa:    14R3dXhbsnStDwhyrNY8LN6ZRZ2PefKb2W
-
-Po zaplateni a overeni platby zasleme na email PDF listok.
-""" % (
-        price,
-        user_id,
-        price_czk,
-        user_id,
-        price_btc,
+    msg.body = render_template(
+        "registered.txt", btc_address=btc_address, btc_price=btc_price
     )
-
     send_mail_async(app, msg)
 
-    buf = StringIO.StringIO()
-    img = qrcode.make(
-        "bitcoin:14R3dXhbsnStDwhyrNY8LN6ZRZ2PefKb2W?amount=%0.8f" % price_btc
+    qr_uri = "bitcoin:{btc_address}?amount={btc_price}".format(
+        btc_address=btc_address, btc_price=btc_price
     )
-    img.save(buf, "PNG")
-    qrdata = "data:image/png;base64," + base64.b64encode(buf.getvalue())
+    buf = BytesIO()
+    img = qrcode.make(qr_uri)
+    img.save(buf, format="PNG")
+    btc_qrcode = "data:image/png;base64," + base64.b64encode(buf.getvalue()).decode()
 
     return render_template(
-        "thanks.html",
-        user_id=user_id,
-        price_eur=price,
-        price_czk=price_czk,
-        price_btc=price_btc,
-        qrcode=qrdata,
+        "registered.html",
+        btc_address=btc_address,
+        btc_price=btc_price,
+        btc_qrcode=btc_qrcode,
     )
 
 
