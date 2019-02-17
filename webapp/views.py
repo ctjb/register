@@ -64,7 +64,7 @@ def register():
         if field in request.form:
             days += "X"
         else:
-            days == "."
+            days += "."
 
     person = Person(nick=nick, email=email, tshirt=tshirt, price=price, days=days)
 
