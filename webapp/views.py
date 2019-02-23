@@ -77,13 +77,17 @@ def register():
         return make_response("Address fail", 500)
     btc_price = "%0.8f" % (price / 100000000)
 
-    """
-    msg = Message("CTJB 2019 Registracia", sender="ctjb@ctjb.net", recipients=[email])
-    msg.body = render_template(
-        "registered.txt", btc_address=btc_address, btc_price=btc_price
-    )
-    send_mail_async(app, msg)
-    """
+    if False:  # sending mails disabled
+        msg = Message(
+            "CTJB 2019 Registracia", sender="ctjb@ctjb.net", recipients=[email]
+        )
+        msg.body = render_template(
+            "registered.txt",
+            btc_address=btc_address,
+            btc_price=btc_price,
+            var_symbol=person.id,
+        )
+        send_mail_async(app, msg)
 
     qr_uri = "bitcoin:{btc_address}?amount={btc_price}".format(
         btc_address=btc_address, btc_price=btc_price
@@ -98,6 +102,7 @@ def register():
         btc_address=btc_address,
         btc_price=btc_price,
         btc_qrcode=btc_qrcode,
+        var_symbol=person.id,
     )
 
 

@@ -5,4 +5,17 @@ Platba v Bitcoinoch
 ciastka:   {{ btc_price }} BTC (posielajte presne!)
 adresa:    {{ btc_address }}
 
+Platba v CZK
+------------
+ciastka:     1500 CZK
+ucet:        2700158887/2010 (Fio)
+var. symbol: {{ var_symbol }}
+
+Platba v EUR
+------------
+ciastka:     60 EUR
+ucet:        CZ7220100000002700158887
+swift:       FIOBCZPPXXX
+var. symbol: {{ var_symbol }}
+
 Po zaplateni a overeni platby zasleme na email PDF listok.
